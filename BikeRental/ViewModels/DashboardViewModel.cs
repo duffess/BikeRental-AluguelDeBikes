@@ -1,40 +1,20 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace BikeRentalDashboard.ViewModels
+namespace BikeRental.ViewModels
 {
     public class DashboardViewModel : INotifyPropertyChanged
     {
-        private int _activeUsers;
-        private int _totalBikes;
-        private decimal _totalRevenue;
-        private Action onLogout;
-
-        public DashboardViewModel(Action onLogout)
+        private string _welcomeMessage = "Bem-vindo ao Sistema de Aluguel de Bicicletas!";
+        public string WelcomeMessage
         {
-            this.onLogout = onLogout;
+            get => _welcomeMessage;
+            set { _welcomeMessage = value; OnPropertyChanged(nameof(WelcomeMessage)); }
         }
 
-        public int ActiveUsers
-        {
-            get => _activeUsers;
-            set { _activeUsers = value; OnPropertyChanged(nameof(ActiveUsers)); }
-        }
-
-        public int TotalBikes
-        {
-            get => _totalBikes;
-            set { _totalBikes = value; OnPropertyChanged(nameof(TotalBikes)); }
-        }
-
-        public decimal TotalRevenue
-        {
-            get => _totalRevenue;
-            set { _totalRevenue = value; OnPropertyChanged(nameof(TotalRevenue)); }
-        }
+        public DashboardViewModel() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

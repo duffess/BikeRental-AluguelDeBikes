@@ -3,14 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:BikeRental.Views"
         xmlns:vm="clr-namespace:BikeRental.ViewModels"
-        Title="Bike Rental" Height="450" Width="800"
-        Background="#1E1E2F">
+        Title="Bike Rental" Height="600" Width="1000"
+        Background="#1E1E2F"
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
 
     <Grid>
-        <ContentControl Content="{Binding CurrentView}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <StackPanel Background="#2C2F4A" Grid.Column="0">
+            <TextBlock Text="BikeRental" Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <Button Content="Dashboard" Margin="0,5" Padding="10" />
+            <Button Content="Usuários" Margin="0,5" Padding="10" />
+            <Button Content="Bicicletas" Margin="0,5" Padding="10" />
+            <Button Content="Relatórios" Margin="0,5" Padding="10" />
+
+        </StackPanel>
+
+        <!-- Conteúdo -->
+        <Border Grid.Column="1" Background="#2C2F4A" CornerRadius="10" Margin="20">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="3" Opacity="0.4"/>
+            </Border.Effect>
+
+            <ContentControl Content="{Binding CurrentView}" />
+        </Border>
     </Grid>
 </Window>

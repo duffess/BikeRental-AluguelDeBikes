@@ -24,5 +24,10 @@ namespace BikeRental.Views
         {
             InitializeComponent();
         }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

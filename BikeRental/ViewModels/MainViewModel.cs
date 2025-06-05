@@ -1,52 +1,42 @@
-﻿using BikeRental.ViewModels;
-using BikeRentalDashboard.ViewModels;
+﻿using System;
 using System.ComponentModel;
 
 namespace BikeRental.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private object currentViewModel;
+        private object _currentView;
+
+        public object CurrentView
+        {
+            get => _currentView;
+            set { _currentView = value; OnPropertyChanged(nameof(CurrentView)); }
+        }
+
+        public LoginViewModel LoginVM { get; }
+        public DashboardViewModel DashboardVM { get; }
+        public UserManagementViewModel UserManagementVM { get; }
+        public BikeManagementViewModel BikeManagementVM { get; }
+        public ReportsViewModel ReportsVM { get; }
 
         public MainViewModel()
         {
-            ShowLogin();
+            LoginVM = new LoginViewModel();
+            DashboardVM = new DashboardViewModel();
+            UserManagementVM = new UserManagementViewModel();
+            BikeManagementVM = new BikeManagementViewModel();
+            ReportsVM = new ReportsViewModel();
+            CurrentView = LoginVM;
+            LoginVM.LoginSucceeded += OnLoginSucceeded;
         }
 
-        public object CurrentViewModel
+        private void OnLoginSucceeded(object sender, EventArgs e)
         {
-            get => currentViewModel;
-            set
-            {
-                if (currentViewModel != value)
-                {
-                    currentViewModel = value;
-                    OnPropertyChanged(nameof(CurrentViewModel));
-                }
-            }
-        }
-
-        public void ShowLogin()
-        {
-            CurrentViewModel = new LoginViewModel(OnLoginSuccess);
-        }
-
-        public void ShowDashboard()
-        {
-            CurrentViewModel = new DashboardViewModel(OnLogout);
-        }
-
-        private void OnLoginSuccess()
-        {
-            ShowDashboard();
-        }
-
-        private void OnLogout()
-        {
-            ShowLogin();
+            CurrentView = DashboardVM;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

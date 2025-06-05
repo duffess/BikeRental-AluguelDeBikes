@@ -1,26 +1,23 @@
 ﻿using System.ComponentModel;
 
-namespace BikeRentalDashboard.ViewModels
+namespace BikeRental.ViewModels
 {
     public class ReportsViewModel : INotifyPropertyChanged
     {
-        // Deixe preparado para futuras implementações
-
-        private string _reportStatus;
-
-        public string ReportStatus
+        private string _reportData;
+        public string ReportData
         {
-            get => _reportStatus;
-            set { _reportStatus = value; OnPropertyChanged(nameof(ReportStatus)); }
+            get => _reportData;
+            set { _reportData = value; OnPropertyChanged(nameof(ReportData)); }
         }
 
         public ReportsViewModel()
         {
-            ReportStatus = "Em desenvolvimento...";
+            ReportData = "Relatório de uso: 10 locações hoje.";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

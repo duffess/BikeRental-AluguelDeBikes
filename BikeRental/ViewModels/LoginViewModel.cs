@@ -1,84 +1,38 @@
-﻿using System;
+﻿using System.Windows.Input;
 using System.ComponentModel;
-using System.Windows.Input;
+using System;
+using BikeRentalDashboard.ViewModels;
+using System.Windows;
 
 namespace BikeRental.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : BaseViewModel
     {
-        private string email;
-        private string password;
-        private string errorMessage;
-        private Action onLoginSuccess;
+        public string Email { get; set; }
+        public string Password { get; set; }
 
-        public LoginViewModel(Action onLoginSuccessCallback)
+        public RelayCommand LoginCommand { get; }
+        public Action<object, EventArgs> LoginSucceeded { get; internal set; }
+
+        public LoginViewModel()
         {
-            onLoginSuccess = onLoginSuccessCallback;
-            LoginCommand = new RelayCommand(Login, CanLogin);
+            LoginCommand = new RelayCommand(param => AutenticarLogin());
         }
 
-        public string Email
+        private void AutenticarLogin()
         {
-            get => email;
-            set
+            if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
-                if (email != value)
-                {
-                    email = value;
-                    OnPropertyChanged(nameof(Email));
-                    ((RelayCommand)LoginCommand).RaiseCanExecuteChanged();
-                }
+                MessageBox.Show("Email e senha são obrigatórios.");
+                return;
             }
-        }
 
-        public string Password
-        {
-            get => password;
-            set
-            {
-                if (password != value)
-                {
-                    password = value;
-                    OnPropertyChanged(nameof(Password));
-                    ((RelayCommand)LoginCommand).RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set
-            {
-                if (errorMessage != value)
-                {
-                    errorMessage = value;
-                    OnPropertyChanged(nameof(ErrorMessage));
-                }
-            }
-        }
-
-        public ICommand LoginCommand { get; }
-
-        private bool CanLogin(object obj)
-        {
-            return !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
-        }
-
-        private void Login(object obj)
-        {
-            if (Email == "admin" && Password == "1234")
-            {
-                ErrorMessage = "";
-                onLoginSuccess?.Invoke();
-            }
+            // MOCK: aceita qualquer email com senha "1234"
+            if (Password == "1234")
+                MessageBox.Show("Login realizado com sucesso!");
             else
-            {
-                ErrorMessage = "Login inválido. Tente novamente.";
-            }
+                MessageBox.Show("Email ou senha inválidos.");
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
+
 }

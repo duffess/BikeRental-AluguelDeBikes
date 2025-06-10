@@ -1,5 +1,4 @@
 ﻿using BikeRental.Models;
-using BikeRentalDashboard.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,11 +8,11 @@ using System.Windows.Input;
 
 namespace BikeRental.ViewModels
 {
-    public class BikeManagementViewModel : BaseViewModel
+    public class BikeManagementViewModel : INotifyPropertyChanged
     {
-        private Bike _selectedBike;
-
         public ObservableCollection<Bike> Bikes { get; set; }
+        public Bike NewBike { get; set; }
+        private Bike _selectedBike;
         public Bike SelectedBike
         {
             get => _selectedBike;
@@ -21,25 +20,16 @@ namespace BikeRental.ViewModels
             {
                 _selectedBike = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(CanChangeStatus));
                 EditBikeCommand.RaiseCanExecuteChanged();
                 DeleteBikeCommand.RaiseCanExecuteChanged();
                 AlterarStatusCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private void OnPropertyChanged()
-        {
-            throw new NotImplementedException();
-        }
-
         public RelayCommand AddBikeCommand { get; }
         public RelayCommand EditBikeCommand { get; }
         public RelayCommand DeleteBikeCommand { get; }
         public RelayCommand AlterarStatusCommand { get; }
-        public Bike NewBike { get; set; }
-
-        public bool CanChangeStatus => SelectedBike != null;
 
         public BikeManagementViewModel()
         {
@@ -49,7 +39,7 @@ namespace BikeRental.ViewModels
             AddBikeCommand = new RelayCommand(param => AddBike());
             EditBikeCommand = new RelayCommand(param => EditBike(), param => SelectedBike != null);
             DeleteBikeCommand = new RelayCommand(param => DeleteBike(), param => SelectedBike != null);
-            AlterarStatusCommand = new RelayCommand(param => AlterarStatus(), param => CanChangeStatus);
+            AlterarStatusCommand = new RelayCommand(param => AlterarStatus(), param => SelectedBike != null);
         }
 
         private void AddBike()
@@ -60,8 +50,10 @@ namespace BikeRental.ViewModels
                 {
                     Id = Bikes.Count + 1,
                     Model = NewBike.Model,
-                    PricePerHour = NewBike.PricePerHour,
-                    IsAvailable = NewBike.IsAvailable
+                    Brand = NewBike.Brand,
+                    Year = NewBike.Year,
+                    IsAvailable = true,
+                    PricePerHour = NewBike.PricePerHour
                 });
 
                 NewBike = new Bike();
@@ -75,52 +67,33 @@ namespace BikeRental.ViewModels
 
         private void EditBike()
         {
-            try
-            {
-                if (SelectedBike != null)
-                {
-                    SelectedBike.Model += " (Editado)";
-                    OnPropertyChanged(nameof(Bikes));
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Erro ao editar bicicleta: {ex.Message}");
-            }
+            if (SelectedBike == null) return;
+
+            SelectedBike.Model = NewBike.Model;
+            SelectedBike.Brand = NewBike.Brand;
+            SelectedBike.Year = NewBike.Year;
+            SelectedBike.IsAvailable = NewBike.IsAvailable;
+            SelectedBike.PricePerHour = NewBike.PricePerHour;
+
+            OnPropertyChanged(nameof(Bikes));
         }
 
         private void DeleteBike()
         {
-            try
-            {
-                if (SelectedBike != null)
-                    Bikes.Remove(SelectedBike);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Erro ao deletar bicicleta: {ex.Message}");
-            }
+            if (SelectedBike != null)
+                Bikes.Remove(SelectedBike);
         }
 
         private void AlterarStatus()
         {
-            try
+            if (SelectedBike != null)
             {
-                if (SelectedBike != null)
-                {
-                    SelectedBike.IsAvailable = !SelectedBike.IsAvailable;
-                    OnPropertyChanged(nameof(SelectedBike));
-                    OnPropertyChanged(nameof(SelectedBike.Status));
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Erro ao alterar status da bicicleta: {ex.Message}");
+                SelectedBike.IsAvailable = !SelectedBike.IsAvailable;
             }
         }
 
-
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
-
 }

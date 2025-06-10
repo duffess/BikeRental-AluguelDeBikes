@@ -32,18 +32,13 @@ namespace BikeRental.ViewModels
             UserManagementVM = new UserManagementViewModel();
             BikeManagementVM = new BikeManagementViewModel();
             ReportsVM = new ReportsViewModel();
-            CurrentView = LoginVM;
-            LoginVM.LoginSucceeded += OnLoginSucceeded;
-
-            CurrentView = LoginVM;
-
-            LoginVM.LoginSucceeded += OnLoginSucceeded;
 
             ShowDashboardCommand = new RelayCommand(o => CurrentView = DashboardVM);
             ShowUsersCommand = new RelayCommand(o => CurrentView = UserManagementVM);
             ShowBikesCommand = new RelayCommand(o => CurrentView = BikeManagementVM);
             ShowReportsCommand = new RelayCommand(o => CurrentView = ReportsVM);
 
+            CurrentView = DashboardVM;
         }
 
         private void OnLoginSucceeded(object sender, EventArgs e)

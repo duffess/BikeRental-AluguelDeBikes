@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace BikeRental.ViewModels
 {
@@ -19,6 +20,11 @@ namespace BikeRental.ViewModels
         public BikeManagementViewModel BikeManagementVM { get; }
         public ReportsViewModel ReportsVM { get; }
 
+        public ICommand ShowDashboardCommand { get; }
+        public ICommand ShowUsersCommand { get; }
+        public ICommand ShowBikesCommand { get; }
+        public ICommand ShowReportsCommand { get; }
+
         public MainViewModel()
         {
             LoginVM = new LoginViewModel();
@@ -28,6 +34,16 @@ namespace BikeRental.ViewModels
             ReportsVM = new ReportsViewModel();
             CurrentView = LoginVM;
             LoginVM.LoginSucceeded += OnLoginSucceeded;
+
+            CurrentView = LoginVM;
+
+            LoginVM.LoginSucceeded += OnLoginSucceeded;
+
+            ShowDashboardCommand = new RelayCommand(o => CurrentView = DashboardVM);
+            ShowUsersCommand = new RelayCommand(o => CurrentView = UserManagementVM);
+            ShowBikesCommand = new RelayCommand(o => CurrentView = BikeManagementVM);
+            ShowReportsCommand = new RelayCommand(o => CurrentView = ReportsVM);
+
         }
 
         private void OnLoginSucceeded(object sender, EventArgs e)

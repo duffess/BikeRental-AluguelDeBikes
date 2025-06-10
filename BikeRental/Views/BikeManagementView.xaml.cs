@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace BikeRental.Views
 {
     /// <summary>
-    /// Interação lógica para BikeManagementView.xam
+    /// Interação lógica para BikeManagementView.xaml
     /// </summary>
     public partial class BikeManagementView : UserControl
     {
         public BikeManagementView()
         {
             InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
         }
     }
 }

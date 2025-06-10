@@ -1,17 +1,37 @@
-﻿using System;
+﻿using BikeRental.Models;
+using BikeRentalDashboard.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
-using BikeRental.Models;
-using BikeRentalDashboard.ViewModels;
 
 namespace BikeRental.ViewModels
 {
     public class BikeManagementViewModel : BaseViewModel
     {
+        private Bike _selectedBike;
+
         public ObservableCollection<Bike> Bikes { get; set; }
-        public Bike SelectedBike { get; set; }
+        public Bike SelectedBike
+        {
+            get => _selectedBike;
+            set
+            {
+                _selectedBike = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanChangeStatus));
+                EditBikeCommand.RaiseCanExecuteChanged();
+                DeleteBikeCommand.RaiseCanExecuteChanged();
+                AlterarStatusCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private void OnPropertyChanged()
+        {
+            throw new NotImplementedException();
+        }
 
         public RelayCommand AddBikeCommand { get; }
         public RelayCommand EditBikeCommand { get; }
@@ -34,42 +54,73 @@ namespace BikeRental.ViewModels
 
         private void AddBike()
         {
-            Bikes.Add(new Bike
+            try
             {
-                Id = Bikes.Count + 1,
-                Model = NewBike.Model,
-                PricePerHour = NewBike.PricePerHour,
-                IsAvailable = NewBike.IsAvailable
-            });
+                Bikes.Add(new Bike
+                {
+                    Id = Bikes.Count + 1,
+                    Model = NewBike.Model,
+                    PricePerHour = NewBike.PricePerHour,
+                    IsAvailable = NewBike.IsAvailable
+                });
 
-            // Limpa o form
-            NewBike = new Bike();
+                NewBike = new Bike();
+                OnPropertyChanged(nameof(NewBike));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao adicionar bike: {ex.Message}");
+            }
         }
 
         private void EditBike()
         {
-            if (SelectedBike != null)
+            try
             {
-                SelectedBike.Model += " (Editado)";
-                OnPropertyChanged(nameof(Bikes));
+                if (SelectedBike != null)
+                {
+                    SelectedBike.Model += " (Editado)";
+                    OnPropertyChanged(nameof(Bikes));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao editar bicicleta: {ex.Message}");
             }
         }
 
         private void DeleteBike()
         {
-            if (SelectedBike != null)
-                Bikes.Remove(SelectedBike);
+            try
+            {
+                if (SelectedBike != null)
+                    Bikes.Remove(SelectedBike);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao deletar bicicleta: {ex.Message}");
+            }
         }
 
         private void AlterarStatus()
         {
-            if (SelectedBike != null)
+            try
             {
-                SelectedBike.IsAvailable = !SelectedBike.IsAvailable;
-                OnPropertyChanged(nameof(SelectedBike));
-                OnPropertyChanged(nameof(SelectedBike.Status));
+                if (SelectedBike != null)
+                {
+                    SelectedBike.IsAvailable = !SelectedBike.IsAvailable;
+                    OnPropertyChanged(nameof(SelectedBike));
+                    OnPropertyChanged(nameof(SelectedBike.Status));
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao alterar status da bicicleta: {ex.Message}");
             }
         }
+
+
+
     }
 
 }

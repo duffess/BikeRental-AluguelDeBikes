@@ -23,15 +23,18 @@ namespace BikeRental.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
-                MessageBox.Show("Email e senha são obrigatórios.");
+                MessageBox.Show("Preencha todos os campos.");
                 return;
             }
 
-            // MOCK: aceita qualquer email com senha "1234"
-            if (Password == "1234")
-                MessageBox.Show("Login realizado com sucesso!");
+            if (Email == "admin@admin.com" && Password == "1234")
+            {
+                LoginSucceeded?.Invoke(this, EventArgs.Empty);
+            }
             else
-                MessageBox.Show("Email ou senha inválidos.");
+            {
+                MessageBox.Show("E-mail ou senha inválidos.");
+            }
         }
     }
 

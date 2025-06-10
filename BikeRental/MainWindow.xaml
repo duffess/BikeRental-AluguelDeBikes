@@ -21,10 +21,11 @@
         <StackPanel Background="#2C2F4A" Grid.Column="0">
             <TextBlock Text="BikeRental" Foreground="White" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
 
-            <Button Content="Dashboard" Margin="0,5" Padding="10" />
-            <Button Content="Usuários" Margin="0,5" Padding="10" />
-            <Button Content="Bicicletas" Margin="0,5" Padding="10" />
-            <Button Content="Relatórios" Margin="0,5" Padding="10" />
+            <Button Content="Dashboard" Command="{Binding ShowDashboardCommand}" Margin="0,5" Padding="10" />
+            <Button Content="Usuários" Command="{Binding ShowUsersCommand}" Margin="0,5" Padding="10" />
+            <Button Content="Bicicletas" Command="{Binding ShowBikesCommand}" Margin="0,5" Padding="10" />
+            <Button Content="Relatórios" Command="{Binding ShowReportsCommand}" Margin="0,5" Padding="10" />
+
 
         </StackPanel>
 

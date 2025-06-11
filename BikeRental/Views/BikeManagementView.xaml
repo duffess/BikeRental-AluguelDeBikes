@@ -19,13 +19,16 @@
         <ScrollViewer Grid.Row="1" Margin="0,10,390,0" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Modelo:" FontWeight="SemiBold" Margin="0,5"/>
-                <TextBox Name="txtModel" Height="30" Margin="0,0,0,10" />
+                <TextBox Text="{Binding NewBike.Model, UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="0,0,0,10" />
 
                 <TextBlock Text="Marca:" FontWeight="SemiBold" Margin="0,5"/>
-                <TextBox Name="txtBrand" Height="30" Margin="0,0,0,10" />
+                <TextBox Text="{Binding NewBike.Brand, UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="0,0,0,10" />
 
                 <TextBlock Text="Ano:" FontWeight="SemiBold" Margin="0,5"/>
-                <TextBox Name="txtYear" Height="30" Margin="0,0,0,10" />
+                <TextBox Text="{Binding NewBike.Year, UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="0,0,0,10" />
+                
+                <TextBlock Text="Preço/hora:" FontWeight="SemiBold" Margin="0,5"/>
+                <TextBox Text="{Binding NewBike.PricePerHour, UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="0,0,0,10" />
 
                 <Button Content="Salvar" Height="35" Background="#007ACC" Foreground="White"
                 Command="{Binding AddBikeCommand}" Margin="0,5"/>

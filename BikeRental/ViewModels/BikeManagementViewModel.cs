@@ -20,6 +20,17 @@ namespace BikeRental.ViewModels
             {
                 _selectedBike = value;
                 OnPropertyChanged();
+
+                if (_selectedBike != null)
+                {
+                    NewBike.Model = _selectedBike.Model;
+                    NewBike.Brand = _selectedBike.Brand;
+                    NewBike.Year = _selectedBike.Year;
+                    NewBike.IsAvailable = _selectedBike.IsAvailable;
+                    NewBike.PricePerHour = _selectedBike.PricePerHour;
+                    OnPropertyChanged(nameof(NewBike));
+                }
+
                 EditBikeCommand.RaiseCanExecuteChanged();
                 DeleteBikeCommand.RaiseCanExecuteChanged();
                 AlterarStatusCommand.RaiseCanExecuteChanged();

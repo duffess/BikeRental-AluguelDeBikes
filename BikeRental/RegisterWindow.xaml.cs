@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using BikeRental.Models;
 using BikeRental.Services;
-using BikeRentalDashboard.Models;
+using BikeRental.Models;
 
 namespace BikeRental.Views
 {
@@ -30,8 +30,7 @@ namespace BikeRental.Views
                 return;
             }
 
-            var novoUsuario = new User { Username = nome, Email = email, Password = senha };
-            UserService.Adicionar(novoUsuario);
+           
 
             MessageBox.Show("Usuário registrado com sucesso!");
 

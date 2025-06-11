@@ -1,12 +1,45 @@
-﻿namespace BikeRentalDashboard.Models
+﻿using System.ComponentModel;
+
+public class User : INotifyPropertyChanged
 {
-    public class User
+    private string _username;
+    private string _email;
+    private string _profile;
+
+    public int Id { get; set; }
+
+    public string Username
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }  
-        public string Role { get; set; }
-        public string Email { get; internal set; }
-        public string Profile { get; internal set; }
+        get => _username;
+        set
+        {
+            _username = value;
+            OnPropertyChanged(nameof(Username));
+        }
     }
+
+    public string Email
+    {
+        get => _email;
+        set
+        {
+            _email = value;
+            OnPropertyChanged(nameof(Email));
+        }
+    }
+
+    public string Profile
+    {
+        get => _profile;
+        set
+        {
+            _profile = value;
+            OnPropertyChanged(nameof(Profile));
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }

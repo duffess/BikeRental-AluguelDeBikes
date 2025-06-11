@@ -24,5 +24,6 @@ namespace BikeRental.Views
         {
             InitializeComponent();
         }
+
     }
 }

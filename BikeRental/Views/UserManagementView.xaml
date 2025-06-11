@@ -45,7 +45,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="20" Cursor="">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -64,7 +64,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}" />
-                        <GridViewColumn Header="Nome" Width="150" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Nome" Width="150" DisplayMemberBinding="{Binding Username}" />
                         <GridViewColumn Header="Email" Width="200" DisplayMemberBinding="{Binding Email}" />
                         <GridViewColumn Header="Perfil" Width="100" DisplayMemberBinding="{Binding Profile}" />
                     </GridView>
@@ -72,12 +72,29 @@
             </ListView>
         </Border>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button Content="Adicionar" Command="{Binding AddUserCommand}" Width="100" />
-            <Button Content="Editar" Command="{Binding EditUserCommand}" Width="100" 
-                    IsEnabled="{Binding SelectedUser, Converter={StaticResource NullToBoolConverter}}" />
-            <Button Content="Excluir" Command="{Binding DeleteUserCommand}" Width="100" 
-                    IsEnabled="{Binding SelectedUser, Converter={StaticResource NullToBoolConverter}}" />
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,10,0,0">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Nome:" FontWeight="ExtraBold" Margin="0,5"/>
+                <TextBox Width="150" Margin="5"
+                 Text="{Binding NewUser.Username, UpdateSourceTrigger=PropertyChanged}" />
+                
+                <TextBlock Text="Email:" FontWeight="ExtraBold" Margin="0,5"/>
+                <TextBox Width="200" Margin="5"
+                 Text="{Binding NewUser.Email, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Text="Perfil:" FontWeight="ExtraBold" Margin="0,5"/>
+                <TextBox Width="100" Margin="5"
+                 Text="{Binding NewUser.Profile, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Adicionar" Command="{Binding AddUserCommand}" Width="100" />
+                <Button Content="Editar" Command="{Binding EditUserCommand}" Width="100"
+                IsEnabled="{Binding SelectedUser, Converter={StaticResource NullToBoolConverter}}" />
+                <Button Content="Excluir" Command="{Binding DeleteUserCommand}" Width="100"
+                IsEnabled="{Binding SelectedUser, Converter={StaticResource NullToBoolConverter}}" />
+            </StackPanel>
         </StackPanel>
+
     </Grid>
 </UserControl>

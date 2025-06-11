@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BikeRentalDashboard.Models;
+using BikeRental.Models;
 
 namespace BikeRental.Services
 {
@@ -18,11 +18,6 @@ namespace BikeRental.Services
         public static bool EmailExiste(string email)
         {
             return usuarios.Any(u => u.Email == email);
-        }
-
-        public static User Autenticar(string email, string senha)
-        {
-            return usuarios.FirstOrDefault(u => u.Email == email && u.Password == senha);
         }
 
         public static List<User> ListarTodos()

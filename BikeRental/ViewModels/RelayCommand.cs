@@ -7,11 +7,17 @@ namespace BikeRental
     {
         private readonly Action<object> execute;
         private readonly Predicate<object> canExecute;
+        private Action generateReport;
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
+        }
+
+        public RelayCommand(Action generateReport)
+        {
+            this.generateReport = generateReport;
         }
 
         public bool CanExecute(object parameter) => canExecute == null || canExecute(parameter);

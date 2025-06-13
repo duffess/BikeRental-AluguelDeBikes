@@ -5,8 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BikeRental.Views"
              mc:Ignorable="d" 
+             Background="#1E1E2F"             
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Usuário:" VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" 
+                  ItemsSource="{Binding Users}" 
+                  SelectedItem="{Binding SelectedUser}" 
+                  DisplayMemberPath="Username" Margin="0,0,0,10"/>
+
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Biciletas:" VerticalAlignment="Top" Margin="0,32,10,0" Grid.RowSpan="2"/>
+        <ComboBox Grid.Row="0" 
+                  ItemsSource="{Binding Bikes}" 
+                  SelectedItem="{Binding SelectedBike}" 
+                  DisplayMemberPath="Username" Margin="0,36,0,59" Grid.RowSpan="3" Grid.Column="1"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Data de aluguel:" VerticalAlignment="Top" Margin="0,10,10,0"/>
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RentalDate}" Margin="0,5,0,5"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Data de devolução:" VerticalAlignment="Top" Margin="0,43,10,0"/>
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RentalDate}" Margin="0,39,0,-29"/>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="Confirmar Aluguel"
+                HorizontalAlignment="Center"
+                Command="{Binding GenerateReportCommand}" Margin="0,101,0,-101" />
     </Grid>
+
+
+
 </UserControl>

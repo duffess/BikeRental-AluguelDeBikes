@@ -5,8 +5,63 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BikeRental.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             Background="#1E1E2F"             
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Usuário -->
+            <RowDefinition Height="Auto"/>
+            <!-- Bicicleta -->
+            <RowDefinition Height="Auto"/>
+            <!-- Datas -->
+            <RowDefinition Height="Auto"/>
+            <!-- Botão -->
+            <RowDefinition Height="*"/>
+            <!-- Relatórios -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Usuário -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Usuário:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" 
+                  ItemsSource="{Binding Users}" 
+                  SelectedItem="{Binding SelectedUser}" 
+                  DisplayMemberPath="Username"
+                  Margin="0,0,0,10"/>
+
+        <!-- Bicicletas -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Bicicleta:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <ComboBox Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Bikes}" 
+                  SelectedItem="{Binding SelectedBike}" 
+                  DisplayMemberPath="Model"
+                  Margin="0,0,0,10"/>
+
+        <!-- Datas -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Data de aluguel:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,5"/>
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding RentalDate}" Margin="0,0,0,5"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Data de devolução:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,10"/>
+        <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding ReturnDate}" Margin="0,0,0,10"/>
+
+        <!-- Botão Confirmar -->
+        <Button Grid.Row="3" Grid.Column="1" Content="Confirmar Aluguel"
+        HorizontalAlignment="Left"
+        Width="192"
+        Command="{Binding GenerateReportCommand}" Margin="182,38,0,43" />
+
+        <!-- Relatórios -->
+        <ScrollViewer Grid.Row="5" Grid.ColumnSpan="2" Margin="0,10,0,0" VerticalScrollBarVisibility="Auto">
+            <TextBlock Text="{Binding ReportData}"
+                       Foreground="White"
+                       FontSize="14"
+                       TextWrapping="Wrap"
+                       Padding="10"/>
+        </ScrollViewer>
     </Grid>
 </UserControl>
